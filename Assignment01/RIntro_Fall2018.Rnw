@@ -1,0 +1,364 @@
+\documentclass{article}
+
+\usepackage[margin=0.75in]{geometry}
+
+\begin{document}
+\begin{center}
+{\Large {
+   \bfseries 
+   STAT 411/511 - A short introduction to R\\
+   }
+    \vspace{0.3cm}
+  
+  Complete this before starting Assignment 1
+  }
+\end{center}
+\vspace{0.25cm}
+
+A relatively large component of this class is learning to use software to perform exploratory data analysis (plots and summaries) and to conduct the statistical analysis and display results.  It is no longer possible to become adept at data analysis without learning a software package.  We use the free, opensource R statistical software for this class because of its broad appeal and utility across disciplines.  The ability to program in R is itself now a skill that is highly desired and may help you get a job in the future.  It is definitely something to put on your resume.
+
+Students with little to no computer programming experience often have a very difficult time with the computing portion of the class.  I try very hard to maintain a balance between too much emphasis on coding that people lose sight of the statistical concepts and too little emphasis on coding so that you come out of the class with few R skills.  This is a great opportunity to learn both and it is possible - it just takes work. 
+
+\vspace{0.2cm}
+
+NOTE:  Please post a question on D2L or email me if you are stuck - before you get overly frustrated or waste time.  Other students may be able to quickly help through D2L (even if it's the middle of the night!). Do NOT spend hours debugging R code! There is a balance between wasting time and learning to do things in R.  Start assignments early! Ask for help! Keep an eye on your priorities and manage your time!
+
+\vspace{0.2cm}
+
+Please go through this entire introduction before beginning Assignment 1.  I will give instructions for working in RStudio.  These things can be accomplished on a PC or Mac without RStudio, but the commands/instructions are slightly different.
+\\ \rule{\textwidth}{.5mm}
+
+\textbf{To turn in}:  Turn in your script file on D2L after completing this introduction.  At the end of your script file you should do your best to answer the questions at the end of the assignment (R terms you should know).  It should be well organized.  Be sure to include comments in the code to help with organization and explain what you are doing (see below for more details). This will be worth 10 points towards Assignment 1.
+\\ \rule{\linewidth}{.5mm}
+
+\section{Create a script file}
+
+\begin{enumerate}
+
+\item To start, using \emph{File} $\longrightarrow$   \emph{New File} $\longrightarrow$  \emph{R Script}.  (The specific wording depends on whether you are using RStudio and whether you are on a Mac or PC.  The option is always somewhere under \emph{File} though).  Use \emph{File} $\longrightarrow$  \emph{Save As} to save your file in the location you would like to save your work (preferably a folder for this class).  For this assignment save it as something like \emph{RIntroEllis}. The .R extension should automatically be added to the file.  A \emph{script file} is just a fancy name for a text file that you will store and edit all your R code within.  Only rarely should you find yourself typing in the Console window.
+
+\item Type all your work for this introduction into your script file and SAVE often.  You can run specific parts of the code by highlighting just the code you want to run and then hitting the ``Run" button at the top of the window or using the shortcut keys.  You can also run individual lines without highlighting - just by placing your cursor in the line before running it.  The ``answer" will pop up in the \emph{Console} window.  
+
+\item For this tutorial, you can type the code I give you, or something very similar (you do not have to use the same numbers or names).  The ``answers" that R should give you in the \emph{Console Window} are shown behind the \texttt{\#\#} sign, like this
+<<echo=F>>=
+cat('ANSWER FROM CONSOLE')
+@
+  You should be checking what appears in the \emph{Console} window.
+
+\end{enumerate}
+
+\section{Defining Some Simple Objects in R}
+
+\begin{enumerate}
+\item First, let's just use R as a calculator:
+<<>>=
+4 + 5 + 33
+@
+
+\item Now, let's give the quantity a name.  You can choose whatever name you want, but it shouldn't start with a number or have spaces.  Check the console window after you run this.  Does it show you the answer?
+<<>>=
+silly.thing <- 4 + 5 + 33
+@
+
+\item Putting parentheses around it will allow us to assign and print at the same time, if that's what we want to do...
+<<>>=
+(silly.thing <- 4 + 5 + 33)
+@
+
+\item Let's see how the comment symbol works
+<<>>=
+#How does the comment symbol work?
+#silly.thing
+@
+
+\item If we want to see what the object silly.thing is defined as, we need to type (or run) the name by itself and we will see how it is defined.  You can also look under Environment in the upper righthand window if you are using R Studio.
+
+<<>>=
+silly.thing
+@
+
+\item Let's define another object and look at it:
+<<>>=
+( a <- 2*sqrt(3) ) #2 times the squareroot of 3
+@
+
+\item Now let's use the names to perform some mathematical functions to \texttt{silly.thing} and a
+<<>>=
+silly.thing + a  #addition
+silly.thing - a  #subtraction
+silly.thing/a   #division
+silly.thing*a   #multiplication
+silly.thing^(a)  #raise to the power of a
+log(silly.thing)  #natural logarithm
+exp(a)  #exponentiate
+@
+
+\item I decided I don't like the name silly.thing, so I'm going to change it to something simpler and check out what is in R's memory.  Be sure to run all lines one at a time and see what is in the Console window.
+<<eval=FALSE>>=
+b <- silly.thing
+b
+silly.thing #is silly.thing still in R's memory?
+silly.thing <- 100
+sill.thing #oops, I spelled it wrong!
+Silly.thing #oops, I accidentally capitalized it!
+silly.thing
+
+b #what about b?
+@
+
+\item Can we define objects of characters (letters and words), instead of numbers?
+
+<<>>=
+letterA <- "A"
+letterA
+
+my.name <- "Ishmael"
+my.name
+@
+
+\item There are several basic functions that are very handy for putting things together.
+
+\begin{itemize}
+ \item \emph{Concatonate} means to put things (numbers, letters, or words) together into one string or vector.  We use a \texttt{c()} to do this, where the things to put in the string are within the parentheses and separated with commas.
+ 
+<<>>=
+some.letters <- c("I","L","O","V","E","S","t","a","t","s")
+some.letters
+
+some.numbers <- c(2,4,6,8,20,29,10,34,20000,-20)
+some.numbers
+@
+
+ \item It is often helpful to create a data frame to use for analysis.  We can combine vectors that are the same length into data frames.  Let's first check the length of the vectors to make sure we won't get an error.
+ 
+<<>>=
+length(some.letters)
+length(some.numbers)
+
+data.frame(letters=some.letters, nums=some.numbers)
+@
+
+
+ \item Let's give the data frame a name so that we can refer to it when we would like to use the data stored in it.
+<<eval=FALSE>>=
+letternum.df <- data.frame(letters=some.letters, nums=some.numbers) 
+letternum.df
+@
+
+\item We may also want to create a matrix.  Matrices are only designed for numeric vectors (vectors of numbers).  Let's play around with this a little.  A common way to make a matrix is to use the function \texttt{cbind()}, which stands for \emph{column}-bind because we want to bind columns into a matrix (there is also an \texttt{rbind()} for binding rows).
+
+<<>>=
+cbind(some.numbers, some.numbers) #make a 10x2 matrix
+@
+
+\item What happens to our numbers if we try to combine a vector of letters with a vector of numbers to make a matrix?
+<<>>=
+cbind(some.letters, some.numbers) #what happens here?
+@
+
+\item We can check whether vectors are numbers or characters using the following functions which will spit out a TRUE or a FALSE for us.
+<<>>=
+is.numeric(some.numbers)
+is.numeric(some.letters)
+is.character(some.numbers)
+is.character(some.letters)
+@
+
+\item We could also use the \texttt{class()} or \texttt{str()} functions.
+<<>>=
+class(some.numbers)  # Tells us the class of the object 
+str(some.numbers)    # Tells us the basic structure of the object
+@
+
+\item Factors are an important class of variable for statistical analyses, and are very useful for categorical data.
+<<>>=
+some.letters2<-factor(some.letters)
+some.letters2       # What is different now?
+@   
+\end{itemize}
+
+\item What if we just want to look at parts of the data frame \texttt{letternum.df}?  These commands are useful after importing data files.
+<<eval=FALSE>>=
+names(letternum.df) #look at names
+
+head(letternum.df) #look at first 5 rows
+
+tail(letternum.df) #look at last 5 rows
+
+letternum.df$letters #look only at letters column
+
+letternum.df$nums #look only at numbers colunm
+
+letternum.df[8:10,] #look at rows 8-10, for both columns
+letternum.df[1:2,1] #look at rows 1-2, for column 1
+letternum.df[1,2] #look at value in 1st row and 2nd column
+@
+
+\end{enumerate}
+
+\section{Reading in Data Sets}
+
+For this class, we're going to focus on reading in data sets from text files.  We will usually use .csv files, but a similar method can be used for others.  There are also ways to directly import data sets when using RStudio and it does allow you to look at the data in a spreadsheet view, which is nice.  See Import Dataset option under Environment in upper righthand window in RStudio.  We will play around here with a data set that accompanies The Statistical Sleuth.  It contains names of mammal species, with records of average brain weight, average body size, average litter size, and average gestation length.
+
+\begin{enumerate}
+
+\item First, we need to think about our \textbf{Working Directory}.  The working directory is the folder on your computer that R thinks it is working in.  It will look for and save files here.  You can set it using command lines, or to begin with we'll just use the drop down menu.  In RStudio,  \emph{Session} $\longrightarrow$ \emph{Set Working Directory} $\longrightarrow$ \emph{Choose Directory}.  If you have already opened your script file in the location you want to be the working directory you can just choose \emph{To Source File Location} under \emph{Set Working Directory}, instead of browsing to the folder using \emph{Choose Directory}.  
+
+\item Make sure you save the data file \texttt{GestationBrainWeight.csv} in your working directory.  If you have it in a subdirectory, e.g. in a \texttt{data} folder, use the path relative to your working directory.
+
+\item Now, as long as you followed the first two steps, we can easily import the data set with the following code
+<<>>=
+brain.data <- read.csv("data/GestationBrainWeight.csv", header=TRUE)
+@
+
+\item Some useful functions if the previous command gave you an error are
+<<eval=F>>=
+getwd()  #What's your current working directory?
+dir()  #What's IN your current working directory?
+file.choose() # Maybe you need to go find it
+@
+
+
+\item Now \texttt{brain.data} is loaded, but we have not looked at it yet.  Let's check it out and make sure we understand what is in it.  You can look at the whole thing within the console window with the following:
+
+<<eval=FALSE>>=
+brain.data
+@
+
+\item To see it in spreadsheet view if you are using RStudio, look in the \emph{Environment} window in upper right, find \texttt{brain.data} and click on the little spreadsheet view icon on the right of the line.  This will open \texttt{brain.data} window in the same window frame where your script file is.
+
+\item We can also look at other parts of it within the console window with the following commands.
+<<eval=FALSE>>=
+names(brain.data) #check names of variables
+head(brain.data) #look at first 5 rows
+summary(brain.data) #get summary stats for all variables
+dim(brain.data) #dimension of brain.data
+str(brain.data) # A little more info
+@
+\end{enumerate}
+
+
+\section{Loading Packages}
+
+Before moving to plotting, we will learn how to install and load packages in R.  Packages are just collections of functions we can use to do things more easily in R (thanks to others we don't have to reinvent the wheel).  Anyone can submit packages and they are not always tested, so while it is a wonderful thing that makes R very powerful, we should also keep in mind that checking comes from people trying it.
+
+For plotting, we are going to use the basic plotting commands in R, as well as the \texttt{ggplot2} package and the \texttt{mosaic} package.  You will need to install these packages on your computer \textbf{one time} and then after that, you will just have to load the package in R using \texttt{library(package name)} if you want to use it during a session.
+
+\begin{enumerate}
+\item Here is the code for installing a package OR you can use the drop down menues to do it.  In RStudio the drop down menu in under \emph{Tools} $\longrightarrow$ \emph{Install Packages...}.  
+
+<<eval=FALSE, echo=FALSE>>=
+install.packages("mosaic", dependencies=TRUE) 
+  #dependencies=TRUE means it will automatically install other packages it uses
+@
+
+\item To load the package after installing it, we will using \texttt{library()} (\texttt{require()} also works, but is not preferred)
+
+<<include=TRUE, eval=FALSE, echo=TRUE>>=
+library(ggplot2)
+library(mosaic)
+@
+\end{enumerate}
+
+\section{Plotting}
+
+We will use the base R plotting commands (you will see these in Assignments 1 and 2), but we will also using the package \texttt{ggplot2} for making some fancier plots.  The syntax for ggplot is different from usual R plotting commands, but it certainly makes prettier plots and many people from various disciplines are using it.
+
+We will also sometimes use a function in the mosaic package called \texttt{mPlot()} and you are welcome to use this when you would like to if it works for the problem.  It is user-friendly and interactive, yet also provides the CODE for the plot you made after you make it.  \emph{You should be studying the code when you make a plot, not only using the drop-downs}.  I will be providing code directly and not instructions for drop-down menus, so you will need to understand the syntax at some point.
+
+\begin{enumerate}
+ \item First, let's make sure the mosaic package was loaded properly and we can use \texttt{mPlot()} function.  To check this, let's see if we can get to the help file that goes with the function.
+<<eval=FALSE>>=
+help(mplot) #oops - forgot to use a capital P
+help(mPlot)
+@
+
+  \item First, we need to tell \texttt{mPlot} what data file we want to use to create plots.
+<<eval=FALSE>>=
+mPlot(brain.data)
+@
+
+  \item After you run this, a plot will show up in the plotting window (lower right corner of default RStudio windows).  In the top left corner of the plot there is a gearwheel.  Click on the gearwheel to open a window with the plotting options.  I will not go through all the options here, but you should play around with them to start to understand them.  There are a couple of options I would like you to change from the default.
+    \begin{enumerate}
+      \item Change GRAPHICS SYSTEM to \texttt{ggplot2} (not \texttt{lattice})
+      \item This function will allow you to easily make plots before you understand the code needed to make them.  However, I want you to start learning the code.  To do this, you will use the \emph{Show Expression} button, which will put the code into the console window that you used to make the plot you came up with.
+    \end{enumerate}
+    
+  \item Construct a scatter plot with brain weight on the y-axix and gestation length on the x-axis.  Here is the code you could use directly to make the plot, and the plot should look like that shown below.
+  <<tidy=FALSE, fig.width=3, fig.height=3, eval=FALSE>>=
+ggplot(data=brain.data, aes(x=Gestation, y=Brain)) + geom_point() + 
+  theme(legend.position="none") + labs(title="") 
+@
+  
+  \item Let's try natural log transforming both brain weight and gestation length.  We can do this using ggplot2() with the below code.  It looks like it should be simple in \texttt{mPlot()}, but the default is log base 10 instead of natural log, and usually we are going to want the natural log.
+   <<tidy=FALSE, fig.width=4, fig.height=4, eval=FALSE>>=
+   ggplot(data=brain.data, aes(x=Gestation, y=Brain)) + geom_point() + 
+      scale_x_continuous(trans='log') + scale_y_continuous(trans="log")
+   @
+  
+  \item Another option is to actually make the log transformed variables part of the dataframe and directly plot them.  This allows us to use them in other ways later on as well.
+  << >>=
+#take the natural log of Brain and define new variable ln.brain
+brain.data$ln.brain <- log(brain.data$Brain) 
+
+#take the natural log of Body and define new variable ln.body
+brain.data$ln.body <- log(brain.data$Body)
+
+#take the natural log of Gestation and define new variable ln.gest
+brain.data$ln.gest <- log(brain.data$Gestation)
+  @
+  
+  \item One very helpful feature is being able to code points or split up scatter plots by another variable that is composed of category labels.  First, we will create a new variable that assigns each species to one of six body weight categories, and it is called \texttt{cat.body}. This command will add \texttt{cat.body} into the dataframe \texttt{brain.data}.
+  <<>>=
+  brain.data$cat.body <- cut(brain.data$ln.body, breaks=6)
+
+  names(brain.data)  #check to see that the new variable cut.ln.body is there
+  @
+  
+  \item Now, type the following again you will have more options for variables to use.
+  <<eval=FALSE>>=
+  mPlot(brain.data)
+  @
+  
+   \item Now, let's color the points in the scatter plot according to what body weight category they are in.  Can you change the color of the points in the first scatter plot you made according to the body size category?
+   <<tidy=FALSE, fig.width=4, fig.height=4, eval=FALSE>>=
+ggplot(data=brain.data, aes(x=ln.gest, y=ln.body)) + geom_point() + 
+  aes(colour=cat.body) + theme(legend.position="none") + labs(title="") 
+@
+     
+   \item Alternatively, we could split up the plot into \emph{facets} or panels according to the body weight category to end up with 6 scatter plots within the same plot.  Try to do this using the \emph{Facets} menu.
+  <<tidy=FALSE, fig.width=4, fig.height=4, eval=FALSE>>=
+   ggplot(data=brain.data, aes(x=ln.gest, y=ln.brain)) + geom_point()+ 
+      aes(colour=cat.body) +  facet_wrap(~cat.body, ncol=3) + 
+      theme(legend.position="none") + labs(title="") 
+   @
+     
+  \item Can you add a legend to scatterplot with color coding?
+   <<tidy=FALSE, fig.width=4, fig.height=4, eval=FALSE>>=
+  ggplot(data=brain.data, aes(x=ln.gest, y=ln.brain)) + geom_point() + 
+      aes(colour=cat.body) +  theme(legend.position="right") + labs(title="") 
+@
+   
+\end{enumerate}
+
+
+\section{Closing down R after working for awhile}
+Do NOT SAVE your WORKSPACE.  There are times when saving a workspace can be helpful, but it is best to get in the habit of NOT SAVING it so that you start with a clear history in R each time you open it.  You will type everything you need in your R-script and then you can easily re-run things each time you open it.   This is your record of your work and keeps you from ever having to type the same command twice.  It allows someone to check your work and makes your work reproducible.  If you come to me for help I will ask to see your script file.
+
+
+\section{R terms you should know}
+Using the help files, books, and the internet, do your best to answer these questions:
+  \begin{itemize}
+    \item What is a function?
+    \item What is a package?
+    \item What is a list?
+    \item What is a vector or matrix?
+    \item What is a factor?
+    \item What is an object?
+    \item What is the console window? 
+    \item What is a script file and why should I use it?
+    \item What is RStudio and do I have to use it?
+  \end{itemize}
+  
+
+\end{document}
