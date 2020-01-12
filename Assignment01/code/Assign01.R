@@ -1,13 +1,20 @@
 #######################################################
-### STAT 411/511 - Fall 2018
+### STAT 411/511 - Spring 2019
 ### R code for help in completing Assignment 1
 ###  with a lot of extra stuff that might be useful
+### To complete Assignment01, you will need to copy and
+###  paste SOME of the code from this R script into your 
+###  .Rmd file. Make sure you annotate any code that you
+###  present.  Remember that you should be focused on
+###  answering the questions from the assignment.  Only
+###  include code and figures that you really need for
+###  your answers.  
 #######################################################
 
 ### At the start of a new R session 
 #  - make sure you check or set your working directory
 #  - start R with a clean slate 
-getwd()  
+getwd()             # shows current working directory
 rm(list=ls(all=T))  # removes all stored objects
 
 ### Another good practice: put whatever packages you need at the top
@@ -24,6 +31,8 @@ rnorm(10)
 
 ## Plotting histograms of data with normal curve
 #  We'll use base graphics for now
+#  - ggplot usually is a better choice when working with datasets
+#  - base graphics are more like drawing on a blank piece of paper
 #  For a nice description of base graphics parameters see
 #   https://www.statmethods.net/advgraphs/parameters.html 
 
@@ -59,9 +68,8 @@ sum(y.200>=1.96)
 length(y.200)  #what does this do?
 sum(y.200>=1.96)/length(y.200)  #Here is your proportion!
 
-#Or we could use the mean() function 
-#  which calculates the sample average of the 1's and 0's.
-# Make sure you understand why this works.
+#Or we could use the mean() function instead 
+# Make sure you understand why this works!
 mean(y.200>=1.96)
 
 ## Step 2 - n=10000
@@ -98,7 +106,7 @@ abline(v=1.96, lwd=2, col=2) #Add a vertical line to the histogram
 # & (and), | (or) 
 # See https://www.statmethods.net/management/operators.html
 # Some examples to demonstrate:
-( x<-rnorm(10, mean=0, sd=1) )
+( x<-rnorm(1000, mean=0, sd=1) )
 x < -1 | x > 1 # Is the value less than -1 OR greater than 1?
 x > -1 & x < 1 # Is the value greater than -1 AND less than 1?
 x >= -1 & x <= 1  
@@ -132,6 +140,11 @@ help(quantile) # Same as ?quantile
 #    pnorm() takes a z-value and returns the percentile
 qnorm(0.4)
 pnorm(qnorm(0.4))
+
+## 3e. You should be able to answer this problem using code
+#    from part 3a, but you will need to think about what part
+#    of the distribution you need to find the proportion of 
+#    values AS EXTREME OR MORE than the observed value.
 
 ### Problem 4 ######################################### 
 dat<-data.frame(id=1:60, obs=rnorm(n=60, mean=0, sd=2))

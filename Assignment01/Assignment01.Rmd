@@ -2,36 +2,12 @@
 title: "STAT 411/511 - Assignment 1"
 author: "Your name"
 date: "Date"
-output: html_document
+output: pdf_document
 ---
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE, fig.height=4, fig.width=4}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter prevents printing of the R code that generated the plot.
-
-***
-
-# Stat 411/511 - Assignment 1
 
 #####GOAL  
 The goal of this assignment is to review some fundamental statistical concepts and to provide more introduction to R statistical software.  You should complete the R Introduction before starting this assignment.  The format of this assignment is not indicative of future assignments in the course.  
@@ -47,19 +23,18 @@ To complete the assignment, edit this Rmd file through RStudio.  Show relevant R
 ***
 
 ####  Problem 1
-Use the R code provided to simulate draws from a standard normal distribution (`mean=0` and `sd=1`), and use histograms to investigate the distribution.  Repeat draws using samples sizes of `n=5`, `n=10`, `n=30`, and `n=200`
-
+Use the R code provided to simulate draws from a normally distributed population  (with `mean=0` and `sd=1`), and use histograms to investigate the observed data sets.  Repeat draws using samples sizes of `n=5`, `n=10`, `n=30`, and `n=200`
 
 a. Discuss differences among the sample sizes in how close the histograms are to the standard normal curve.
 
-b. Describe how the variability among the different samples (of the same sample size) changes as sample size increases.  For example, when you compare histograms at n=5, are they more or less similar than the set of histograms constructed for n=30?
+b. Describe how the variability among the different draws (each of the same sample size) changes as sample size increases.  For example, when you compare histograms at n=5, are they more or less similar than the set of histograms constructed for n=30?
 
-c. Later, we will have to assess whether it appears data could have come from a normal distribution.  How might this exercise help inform those descriptions?  
+c. In this problem, we started with a population that is normally distributed, from which we then repeatedly drew different sets of data. In this course, we will frequently be given a single, observed set of data; and then we will be asked whether it could have come from a normally distributed population. How might this exercise help inform those descriptions?  
 
 ***
 
 #### Problem 2
-Generate 200 draws from a standard normal distribution (`mean=0` and `sd=1`) and plot them in a histogram. Calculate the proportion of those 200 values that are greater than or equal to 1.96 (use 4 decimal places).  Repeat using draws of 10,000; and, finally, use a built-in function for the normal distribution `pnorm()` to get an answer obtained by integrating the area under the normal density curve to the right of 1.96. Compare your answers and discuss why there is a difference. Is the difference is more or less than you expected?  You can repeat the draws multiple times and incorporate that into your discussion.   
+Generate a sample of 200 observations from a standard normal distribution (`mean=0` and `sd=1`) and plot them in a histogram. Calculate the proportion of those 200 values that are greater than or equal to 1.96 (use 4 decimal places).  Repeat using a sample size of 10,000; and, finally, use a built-in function for the normal distribution `pnorm()` to get an answer obtained by integrating the area under the normal density curve to the right of 1.96. Compare your answers and discuss why there is a difference. Is the difference is more or less than you expected?  You can conduct multiple draws and incorporate that into your discussion.   
 
 ***
 
@@ -74,7 +49,9 @@ c. Find a value such that 40\% of the draws are less than or equal to it (to the
 
 d. Use the `qnorm()` function to find the analogous value directly from the normal curve, and draw a picture clearly labeling the 0.40 and the answer obtained.  Discuss how these two parts are related (make sure to use the word "approximation in your explanation).
 
-e. In your first statistics course, how did you find such values as "What is the probability of standard normal random variable being less than 1.645?" or "What value from a standard normal distribution corresponds to having 95\% of values less than or equal to it?" or "What value from a standard normal distribution corresponds to having 5\% of values greater than it?"  
+e. Much of the basis for statistical inference comes from comparing an observed value (a test statistic) to its reference distribution  (aka a null distribution). The reference distribution may be derived either empirically, in the case of permutation tests, or theoretically for t-tests, etc. Suppose our observed test statistic have a value of 1.34.  Using `y.lots` as an empirical reference distribution, find the proportion of values MORE EXTREME than our observed test statistic.
+
+f. In your first statistics course, you were likely asked to find values such as "What is the probability of standard normal random variable being less than 1.645?" or "What value from a standard normal distribution corresponds to having 95\% of values less than or equal to it?" or "What value from a standard normal distribution corresponds to having 5\% of values greater than it?" How does this exercise relate to those questions?   
 
 ***
 
