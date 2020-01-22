@@ -1,0 +1,79 @@
+---
+title: "STAT 411/511 - Assignment 2"
+author: "Your name"
+date: "Date"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### Problem 1
+Over the course of 30 years, the research team of biologists Peter and Rosemary Grant caught and measured all the birds from more than 20 generations of finches on the Galapagos island of Daphne Major. In one of those years, 1977, a severe drought caused vegetation to wither, and the only remaining food source was a large, tough seed, which the finches ordinarily ignored. Were the birds with larger and stronger beaks for opening these tough seeds more likely to survive that year and did they tend to pass this characteristic to their offspring? 
+
+The Grants and their team measured beak depths (height of the beak at its base in cm) of all 751 Daphne Major finches the year before the drought (1976) and all 89 finches captured the year after the drought (1978) to test for evidence of difference in mean beak depth before versus after the drought. 
+
+Use the Galapagos finch data to complete the following steps:
+
+1.  Write an `ifelse()` statment to relabel the `Year` column of the finch data to be coded as `Before` or `After`. 
+
+2. Use an if statement to switch between one of three options for analyzing the Galapagos finch data.  If `Option` is set to 1, run a simulation-based test of the data; if `Option` has a value of 2, run the t-test version; and if `Option` is 3, return a sassy message of your own choosing.  Show your code for the if statement, but do not evaluate it here (i.e., set the chunk option `eval=F`).
+
+```{r, eval=F}
+Option<-1 # Use 'Option' in the the condition of your if statement
+```
+
+3.  Run your code from (2) multiple times under both the permutation test and t-test options (you do not need to show the code or output).  Do you get the EXACT same answer for both tests each time?  Why or why not?
+
+4. Using the results from either test, write an *evidence* statement interpreting the p-value as demonstrated in class.
+
+5. Using the results from either test, write a *estimate* statement, interpreting the both the estimated difference between the groups and its 95% confidence interval.
+
+6. What does the 95% part mean when you say you are "95% confident that the true difference is between A and B"?
+
+7. Write a Scope of Inference paragraph for these tests following the examples in class.
+
+####  Problem 2
+Human inspectors are often used to inspect products as it is often the most economical method.  Unfortunately, this can lead to serious inspection error problems.  A new company wants to evaluate the performance of its inspectors.  12 novice inspectors evaluate 200 finished products; the same 200 products were also inspected by 12 experienced inspectors.  Below are the number of errors made by each inspector.  There are two questions of interest: (1) Is there evidence to suggest that novice inspectors make more errors on average? and (2)  Is there evidence to suggest that the variability of inspection errors is lower for experienced inspectors than novice inspectors?
+
+```{r}
+Novice<-c(30, 35, 26, 40, 36, 20, 45, 31, 33, 29, 21, 48)
+Experienced<-c(31, 15, 25, 19, 28, 17, 19, 18, 24, 10, 20, 21)
+```
+
+1. Let's look at the first question.  Set up the null and alternative hypotheses of interest. 
+
+$H_A :$ 
+
+$H_0 :$ 
+
+
+2. Propose a test statistic the researchers can use to test their hypotheses AND provide the value of the test statistic.  
+    
+3. To assess the strength of evidence against the null, use the simulation method to construct an approximate sampling distribution for your test statistic--should this be considered a randomization or permutation distribution? Why?  
+    
+4. Describe the approximate sampling distribution of the test statistic, including reference to shape, range, modality (number of peaks), and potential outliers.  
+    
+5. Produce a plot of the sampling distribution, and (i) mark the observed test statistic and (ii) indicate the area(s) associated with the $p$-value.
+    
+6. Now let's look at the second question.  Set up the hypotheses of interest [Note: our parameter of interest is NOT the mean in this case, initially, let's set up our hypotheses using variance $\sigma^2$--make sure to use the appropriate notation!].
+
+$H_A :$ 
+
+$H_0 :$ 
+
+    
+7. A commonly used test statistic used in tests associated with variances is the ratio of mean deviance (RMD) defined as $$RMD = \frac{\sum_{i=1}^{m}{|dev_{i1}|/m}}{\sum_{j=1}^{n}{|dev_{j2}|/n}} $$ where $dev_{i1} = Y_i - M_{Y_2}$ and $dev_{j2} = Y_j - M_{Y_1}$ and $m$ and $n$ are the sample sizes.  Using R, calculate the observed test statistic for our data.
+
+8. If the variability of novice and experience inspectors are similar, what value should our observed test statistic be close to [Hint: it's not 0]?
+
+9. Using the simulation method to construct a reference distribution for this test statistic, describe its approximate sampling distribution, including reference to shape, range, modality (number of peaks), and potential outliers. 
+
+10. Produce a plot of the sampling distribution, and (i) mark the observed test statistic and (ii) indicate the area(s) associated with the $p$-value.
+
+11. Using your analysis, compare novice and experienced inspectors in terms of average number of errors made and the variability in the number of errors made referencing the appropriate values when needed.  
+
+12. Write a Scope of Inference statement for these data.
