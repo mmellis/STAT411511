@@ -1,0 +1,94 @@
+---
+title: "STAT 411/511 - Assignment 3"
+author: "Your name"
+date: "Date"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      cache=F,
+                      cache.path='cache/',
+                      fig.path='figure/')
+```
+####  Problem 1
+```
+> t.test(x,y, var.equal=T)
+
+	Two Sample t-test
+
+data:  x and y
+t = 1.1254, df = 173, p-value = 0.262
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.4728528  1.7273481
+sample estimates:
+mean of x mean of y 
+10.446053  9.818805 
+```
+  a. State the null and alternative hypotheses in terms of $\mu_x$ and $\mu_y$.
+  
+
+  b. What is the total sample size?
+
+  c. Calculate the standard error of the difference between the two sample means (Hint: think about the formula for a $t$-ratio.  What is the "estimate" of a two-sample t-test?)
+
+\[ t_{ratio} = \frac{estimate - parameter}{SE(estimate)} \]
+
+  d. Use the `pt()` function to calculate the p-value associated with the one-sided test where $H_A: \mu_x > \mu_y$ 
+
+  e. Use the `pt()` function to calculate the p-value associated with the one-sided test where $H_A: \mu_x < \mu_y$
+
+
+####  Problem 2
+Exercise 1.25 in Sleuth contains data on Zinc concentrations in the blood of rats that received a dietary supplement and rats that did not receive the supplement.
+
+```{r}
+zinc<-Sleuth3::ex0125
+  str(zinc)
+```
+
+Examine the data and provide a *thorough* discussion of the validity of the using a two sample t-test to compare the mean zinc concentration between the two groups of rats.  Show plots and/or summaries of the data to support your discussion, including random draws to help demonstrate how much deviation from assumptions is expected due to chance.
+
+
+#### Problem 3
+Because of the strength of the Central Limit Theorem, $t$-tools are generally robust to deviations from a normal distribution: With a large enough sample size ($n$), the sampling distribution for the average, $\bar{Y_n}$, should be approximately normal, regardless of the original population distribution.  In many intro stat classes, a common "rule of thumb" is that if $n \geq 30$ then we can assume the CLT is applicable. Is this really the case? To examine this, we will look at how sample means behave when the population distribution is not normal.
+
+```{r, fig.width=8.5, fig.height=3, echo=F}
+par(mfrow=c(1,3),oma=c(0,0,3,0))
+curve(dexp(x,rate=1), xlim=c(0,10), main='Scenario 1: Skewed distribution')
+ text(10,1.0, expression(paste(mu, " = 1")), adj=c(1,1))
+ text(10,0.9, expression(paste(sigma, " = 1")), adj=c(1,1))
+curve(dt(x,df=3), xlim=c(-4,4), main='Scenario 2: Thick-tailed (high kurtosis)')
+ text(4,0.37, expression(paste(mu, " = 0")), adj=c(1,1)) 
+ text(4,0.33, expression(paste(sigma, " = 1")), adj=c(1,1))
+curve(dunif(x, min=0, max=1), xlim=c(-0.5,1.8), main='Scenario 3: Symmetric')
+ text(1.8,1, expression(paste(mu, " = 0.5")), adj=c(1,1)) 
+ text(1.8,0.9, expression(paste(sigma, " = 0.289")), adj=c(1,1))
+title('Non-normal Population Distribution Scenarios', outer=T)
+```
+
+
+(a) Suppose we take a sample of size 30 (`n = 30`) and calculate the sample mean $\bar{Y_{30}}$. Now let's do this a bunch of times for each of the initial populaion distributions scenarios to obtain the sampling distribution of $\bar{Y_{30}}$ for each, and plot the results. You should have one plot for each of the scenarios.  Do these sampling distributions appear approximately normal? If so, which one(s)? [Hint: overlaying the normal curve predicted by CLT will help to judge!]
+
+(b) In the above code, we used a `replicate()` command to create the sampling distribution. Show how to reproduce the `replicate()` command using a for-loop for one of the initial populations. 
+
+(c) Repeat part (a) with samples of sizes `n = 10`, `n = 50`, and `n = 100`, showing plots of your results. 
+
+(d) Which population distribution requires the smallest sample size for the sampling distribution of $\bar{Y_n}$ to be approximately normal?
+
+(e) Which population distribution requires the largest sample size for the sampling distribution of $\bar{Y_n}$ to be approximately normal?
+
+(f) Using your results, briefly explain whether the $n \geq 30$ "rule" is reasonable to use in practice.
+
+
+####  Problem 4 
+In each of the following study descriptions there is at least one potential violation of independence. Specifically describe the dependence in each and state whether it is considered a cluster or serial effect. (You should only need a few sentences to answer each one).    
+
+  1. Respiratory breathing capacity of individuals in houses with low levels of nitrogen dioxide was compared to the capacity of individuals in houses with high levels of nitrogen dioxide. From a sample of 200 houses of each type, breathing capacity was measured on 600 individuals from houses with low nitrogen dioxide and on 800 individuals from houses with high nitrogen dioxide.
+
+  2. Researchers interested in learning about the possible effects of speed limits on traffic accidents recorded the number of accidents per year for each of 10 consecutive years on roads in a state with speed limits of 90 km/hr. They also recorded the number of accidents for the next 7 years on the same roads after the speed limit had been increased to 110 km/hr. The two groups of measurements are the number of accidents per year for those years under study.
+  
+  3. Researchers collected soil samples from ten locations within four agricultural fields (total of 40 samples). Two fields had corn crops and two had wheat crops and the researchers were interested in comparing soil characteristics between the corn and wheat crops.
