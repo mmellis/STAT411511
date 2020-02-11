@@ -3,8 +3,8 @@ title: "STAT 411/511 - Assignment 3"
 author: "Your name"
 date: "Date"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r, include=FALSE}
@@ -37,7 +37,7 @@ mean of x mean of y
 
 \[ t_{ratio} = \frac{estimate - parameter}{SE(estimate)} \]
 
-  d. Use the `pt()` function to calculate the p-value associated with the one-sided test where $H_A: \mu_x > \mu_y$ 
+  d. Use the `pt()` function to calculate the p-value associated with the one-sided test where $H_A: \mu_x > \mu_y$
 
   e. Use the `pt()` function to calculate the p-value associated with the one-sided test where $H_A: \mu_x < \mu_y$
 
