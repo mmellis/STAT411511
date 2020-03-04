@@ -1,0 +1,95 @@
+---
+title: "STAT 411/511 - Assignment 7"
+author: "Your name"
+date: "Date"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval=F)
+```
+####  Problem 1:  Biological basis for homosexuality
+In Sleuth: Chapter 6, Problem 24, pages 173-174
+
+
+(a) To start, inspect the data.  What is the response variable and what is/are the explanatory variable(s) for this problem? What are the study units in these data?
+
+```{r}
+sexpref.dat<-Sleuth3::ex0624
+str(sexpref.dat)
+```
+
+
+(b) Fit the so-called omnibus model - equal means versus separate means comparison. What is the specific hypothesis being tested in this analysis?
+
+```{r}
+lm.full<-lm(Volume~Group, data=sexpref.dat)
+lm.red <- # What goes here??
+anova(lm.red, lm.full)
+```
+
+
+(c) There is something a bit strange about this data set - group 4 only has a single observation. That makes it difficult to compute the group level standard deviation using the pooled variance formula from your text - in fact it makes it impossible.  However, you can still get the pooled standard deviation from the a linear model formula.  Identify the quantity that represents the pooled standard deviation in the `lm()` output and its value for this dataset. Explain in words what the pooled standard deviation is measuring about these data.
+
+
+(d) Produce a normal QQ plot of the residuals from the fitted model above. Compare that plot to
+a normal QQ plot of the raw volume data. Discuss the differences between these plots and the reasons for them. Which is more appropriate for assessing the normality assumption and why?
+
+```{r, fig.width=8.5, fig.height=4, fig.align='center', echo=F}
+par(mfrow=c(1,2))
+qqnorm(residuals(lm.full)); qqline(residuals(lm.full)) 
+qqnorm(sexpref.dat$Volume); qqline(sexpref.dat$Volume)
+```
+
+Three specific a priori comparisons were planned:
+
+    (i) Heterosexual males vs Homosexual males
+    (ii) Heterosexual females vs Homosexual Males
+    (iii) Heterosexual females vs Heterosexual Males
+
+(e) Cause of death could complicate the interpretation of results. What linear combination of coefficients can be used to examine the question of whether cause of death can be ignored? Construct an approximate 95% CI to check on this (you do not need a multiple comparisons correction yet).
+
+```{r}
+# Set up contrast matrix to reflect the comparison you want
+grp.names<-names(coef(lm.full))  # Make sure your contrast coefficients match model coefficients!
+cmp.names<-c("1v2345")           # Please provide meaning (but short!) labels for your comparison
+C<-matrix(c(), nrow=1,           # Fill in contrast coefficients here
+    dimnames=list(cmp.names, grp.names))
+C
+
+g <- C %*% ceof(lm.full)                     # Estimate
+se.g <- sqrt(C %*% vcov(lm.full) %*% t(C))     # Standard error of estimate
+MULTIPLIER<-0                         # What value should you use here?
+                                      # Put it all together to construct CI
+```
+
+(f) Construct an appropriate set of 3 intervals with the family-wise confidence level controlled at the 95% level for the a priori hypotheses above. Calculate the multipliers for both Tukey-Kramer and Bonferroni corrections using the formulas and R code from lectures and your text.  Use these multipliers to construct confidence intervals for the hypotheses above, and compare these confidence intervals that they produce. Tukey is acceptable for unplanned comparisons but still works for planned comparisons and may actually produce narrower intervals than Bonferroni if the number of intervals is large.  How do these theoretically derived intervals compare with the numerical "single-step" technique implemented by `glht()`?
+
+```{r}
+bonferroni.mult <- 0  # Use lecture scripts and formulas in your text to
+tukey.mult <- 0       #  determine the appropriate multipliers for each.
+
+# Set up contrast matrix to reflect the 3 a priori hypotheses
+grp.names<-names(coef(lm.full))  # Make sure your contrast coefficients match model coefficients!
+cmp.names<-c()                   # Please provide meaning (but short!) labels for your comparison
+
+C<-matrix(rbind(c(),             # Set up your 3 sets of comparisons here...
+                c(),
+                c()),  
+     nrow=3, dimnames=list(cmp.names, grp.names))
+C
+
+# Use contrast matrix to build confidence intervals for each comparison...
+library(multcomp) # You may need to run `install.packages('multcomp')`
+comparison<-glht(lm.full, linfct = C)         
+
+confint(comparison, calpha = bonferroni.mult) # Bonferroni corrected confidence intervals
+confint(comparison, calpha = tukey.mult)      # Tukey-Kramer confidence intervals
+confint(comparison)                           # Numerically derived confidence intervals
+```
+
+(g) Using the narrower of Tukey-Kramer, Bonferroni, or "single-step" (numerically solved joint t-distributions) corrected confidence intervals, interpret the differences in INAH3 volume in your comparisons.  Remember that confidence intervals represent a range of plausible values for the "true" value of the parameter.  Do all of the values in these intervals have biological meaning?  That is, the "true" value is at the high or low ends of each confidence interval, how would your interpretation change?
+
+(h) Write a statistical report of your findings. To complete the report, you will need to include additional figures, checks, and discussion to those above. Make sure that the results that you report in your Summary of Statistical Findings directly address the question you set out in your Introduction.  Your "evidence" sentence should focus on the p-value from your ANOVA, while your "estimate" sentence(s) should use appropriately adjusted estimates and confidence intervals.
