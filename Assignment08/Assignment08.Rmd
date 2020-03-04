@@ -1,0 +1,51 @@
+---
+title: "STAT 411/511 - Assignment 8"
+author: "Your name"
+date: "Date"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+####  Problem 1:  Violation of assumptions and model diagnostics
+
+(a) State the assumptions for a simple linear regression. Discuss briefly how these assumptions compare with the assumptions for t-tests and ANOVA.
+
+(b) What assumptions are made about the distribution of the explanatory variable in SLR?  How might the distribution of the explanatory variable affect the results of SLR analysis?
+
+Use code in Assign8.R to work through parts (c-e) for each of the following scenarios:
+
+    (i) A "good" linear regression
+    (ii) A non-linear relationship
+    (iii) Non-constant variance
+    (iv) Presence of outliers
+
+
+(c) Use the `locator()` function to create a simulated dataset representing each of the above scenarios. For each scenario, create a scatterplot and overlay a regression line. Describe the patterns or features of the data that you see, and what SLR assumptions are violated (if any).  Make sure to include some discussion to the distribution of hte x-values.
+
+(d) Use `plot()` on your `lm` model fit to run R's default diagnostic plots for each scenario.  Describe the patterns of features that you see in each plot.  Compare differences in each diagnostic plot with the diagnostic plots for the 'good' linear regression.  Pay specific attention to how the patterns from your scatterplot translate to changes in the diagnostic plots.
+
+(e) Explore different versions of 'good' linear relationships. Create new datasets with different patterns (e.g., switch from increasing to decreasing relationships, change the strength of linear relationship compared to background variability, change sample size and distribution of x-values).  Discuss how summary output and diagnostic plots change for the different datasets. Show diagnostic plots, etc to augment your discussion and highlight changes that you notice.  
+
+
+####  Problem 2: Old Faithful Geyser
+Old Faithful Geyser in Yellowstone National Park derives its name and fame from the regularity (and beauty) of its eruptions.  Rangers usually post the predicted times of eruptions for visitors.  R. A. Hutchinson, a park geologist, collected measurements of the eruption durations (in minutes) and the subsequent time intervals before the next eruption (in minutes) over an 8-day period.
+
+Use the simple linear regression model output below to explore the relationship between the interval between eruptions (the response variable $Y$) and the duration of eruptions (the explanatory variable $X$), both measured in minutes. Write a statistical report for your findings. In your statistical procedures section, take extra time to address the following items:
+
+(a) interpretation of the intercept and slope in the context of the problem
+
+(b) scatterplot and regression diagnostics using the plotting commands above; include also a plot of residuals versus the date of the observation (see Display 8.12 on page 224 for help interpreting the last plot). You do not need to try to fix any problems you believe are indicated by the plots although feel free to suggest any possible remedies.
+
+In your summary of statistical findings section, please be sure to include the following:
+
+(c) reference to a plot of the fitted regression
+
+(d) ``evidence" statement describing the strength of evidence for a linear relationship
+
+(e) ``estimate" statements describing point estimates and confidence intervals for both slope and intercepts.  please use a 90% confidence level for your confidence intervals.
+
+(f) a ``model" statement presenting the regression equation and $R^2$ (e.g., The regression fit, _, described _\% of the variability in _.)
