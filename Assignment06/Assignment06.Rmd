@@ -1,0 +1,73 @@
+---
+title: "STAT 411/511 - Assignment 6"
+author: "Your name"
+date: "Date"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+####  Problem 1:  Fatty Acid Experiment
+In Sleuth: The data are shown in Display 5.21 and the description of the problem is found in Problem 18 on page 143. 
+
+The goal of this experiment was to estimate the effect of a fatty acid CPFA on the level of a certain protein in rat livers. However, experimenters could logistically only administer a single level of CPFA on any given day. For example, treatment CPFA50 was given to 3 rats on Day 1 while CPFA150 was given to 3 different rats on Day 2, etc.  So, a key problem with this design is that treatment effects (CPFA levels) could be confounded with day effects. To address this issue, researchers used a control group for each day. If there is no day effect there should be little difference among the means of the 5 different control groups (one for each of the 5 days).
+
+As an assistant in the lab you have been tasked with determining if there is evidence of a day effect. You will write a complete Statistical Report on your findings. You can assume that the 30 rats in the experiment were assigned to the day by treatment combinations randomly. You should assess assumptions of the ANOVA. As a cautionary note equal standard deviations is a key assumption but the sample sizes in the various treatment combinations are quite small. It is tough to get a precise estimate of the standard deviation when there are only 3 observations! Make sure to compare against random draws with matching sample sizes to convince yourself (and your audience) of this.
+
+(a) Access and inspect the data. Show any additional steps you used in R code to format the data.
+
+```{r, eval=F}
+cpfa<-Sleuth3::ex0518
+  str(cpfa)
+```
+
+The column labelled `Treatment` contains the labels for the 6 different comparison groups of interest for the overall study goal: `CPFA50`,`CPFA150`,`CPFA300`,`CPFA450`,`CPFA600`, and `Control`.  There is also a column with  10 different Day by Treatment Groups: Groups 1 through 10 indicated in the last column of the data set labelled `TrtDayGroup`. Note that Groups 6 through 10 are all `Control` groups. We will use the control groups to examine the question of whether or not there is a day effect. If there is no day effect then there should be no differences over time among those control groups.
+
+(b) Plot side-by-side boxplots of the response over the 10 groups in `TrtDayGroup`. Make sure your boxplot presents the groups in order from 1 to 10, and color the `Control` groups separately. Does the plot suggest a possible problem with the assumption of no day effect in the overall experiment? Justify your answer (potentially using additional figures to support your answer).
+
+(c) We could formally assess the evidence for a day effect by focusing only on the 5 control groups (Groups 6 - 10). That is, we could just strip out those 5 groups and compare a 5 mean model (full model) with a 1 mean model (reduced model). A better approach is to use the information from all 10 groups. Why?
+
+(d) Write out the test for a day effect by comparing a 10 mean model with a 6 mean model:
+
++ Specify the models using the $\mu$ notation.
+  
+Full:
+  
+Reduced:
+
++ In words, write out the null and alternative hypothesis that this model comparison will address
+
+$H_0:$ 
+
+$H_A:$
+  
+(e) For both intercept and no-intercept parameterizations of both models, write out the formula for the linear model, indicating the dimensions of each component based on the sample size in the data.  
+
+Full model - intercept parameterization:
+
+Full model - no intercept parameterization:
+
+Red model - intercept parameterization:
+
+Red model - no intercept parametermization:
+
+
+(f) Using the following 6 rows for data, write out (by hand) the design matrix, coefficient vector, and expectation (fitted values) using beta coefficients (e.g., symbols not estimated values) for the intercept and no intercept parameterizations
+
+```{r, eval=F}
+which.rows<-c(6, 9, 11, 16, 24, 26) # A selection of rows
+cpfa[which.rows, ]                  # Data values from these rows
+```
+
+(g) Run the ANOVA and show how to confirm the p-value using the `pf()` function. 
+  
+
+(h) Write a linear combination to contrast group 6 with the mean of groups 7-10, and calculate a 95% confidence interval for its estimate.  [In your report, you may want to highlight this or other specific comparisons among the treatments.  You can use contrast statements to build these confidence intervals; and for now, we will ignore adjustments for multiple comparisons.]  
+
+
+(i) Write a statistical report addressing the effect of day on treatments. -- Make sure to check assumptions both before and after running your models.  In addition to the raw data, you should use plots of the residuals from the full (10 mean) model.  Please include plots of fitted values versus residuals and qqplots of the residuals in your final report below, taking time to discuss the patterns in these plots and comment on what additional value they provide compared with plots from the raw data
+
+
